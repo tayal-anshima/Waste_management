@@ -1,5 +1,6 @@
 import './App.css';
 import Home from './components/Home';
+import Form from './components/Form';
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,7 +10,13 @@ function App() {
   return (
    <Router>
       <Routes>
-         <Route path="/" element={<Home/>}/>
+         <Route path="/" element={
+          <div>
+            <Home/>
+            <Form/>
+          </div>
+         
+         }/>
       </Routes>
     </Router>
   );
