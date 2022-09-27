@@ -14,7 +14,7 @@ export default function LoginPage(props) {
     console.log(e);
   }
   const handleSubmit=async(e)=>{
-    e.preventDefault();
+    e.pnpreventDefault();
     //code
     
   }
@@ -38,7 +38,7 @@ export default function LoginPage(props) {
                      </select>
                 </div>
                 
-                <Link to={`${category==="Citizen"?"/citizens":"/collector"}`}>
+                <Link to={`${category==="Citizen"?"/citizenslogedin":"/collectorlogedin"}`}>
                 <button className='border w-full my-5 py-2 bg-white  text-teal-900' >Login</button>
                 </Link>
                 
