@@ -30,7 +30,7 @@ export default function HomeNavbar() {
         <li className="mt-3"><Link to="/about" >About</Link></li>
         <li className="mt-3"><Link to="/about" >Footer</Link></li>
         <li className="mt-3 block sm:hidden"><Link to="/login" >Login</Link></li>
-        <li className="mt-3 block sm:hidden"><Link to="/about" >SignUp</Link></li>
+        <li className="mt-3 block sm:hidden"><Link to="/cards" >SignUp</Link></li>
       </ul>
     </div>
     </>
