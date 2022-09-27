@@ -23,7 +23,13 @@ export default function SignUp(props) {
                 truckColour: truckColour,
             };
             await signUp(email, password, data);
+            setTimeout(function() {
+                props.signed(true);
+            }, 1000);
         } catch (error) {
+            setTimeout(function() {
+                props.signed(false);
+            }, 2000);
             setError("Failed to create a new account.");
         }
     }

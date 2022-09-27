@@ -12,14 +12,22 @@ export function UserAuthContextProvider({ children }) {
   const location = useLocation();
   
   async function signUp(email, password, data) {
-    setLoadingUser(true);
-    const { user } = await createUserWithEmailAndPassword( auth, email, password);
-    await createUserObject(user, data);
+    try{
+      const { user } = await createUserWithEmailAndPassword( auth, email, password);
+      await createUserObject(user, data);  
+    }
+    catch(err){
+      console.log(err);
+    }
   }
 
   function logIn(email, password) {
-    setLoadingUser(true);
-    return signInWithEmailAndPassword(auth, email, password);
+    try{
+      return signInWithEmailAndPassword(auth, email, password);
+    }
+    catch(err){
+      console.log(err);
+    }
   }
 
   function logOut() {

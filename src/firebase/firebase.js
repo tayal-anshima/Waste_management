@@ -5,24 +5,13 @@ import { getStorage } from "firebase/storage";
 import {
   doc,
   getDoc,
+  getDocs,
   getFirestore,
   setDoc,
-  writeBatch,
   collection,
-  Timestamp,
   updateDoc,
   addDoc,
 } from "firebase/firestore";
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyDeITRWCGXAGS5OReGsUFEL2ogPAYzTtcE",
-//   authDomain: "v-proctify.firebaseapp.com",
-//   databaseURL: "https://v-proctify-default-rtdb.firebaseio.com",
-//   projectId: "v-proctify",
-//   storageBucket: "v-proctify.appspot.com",
-//   messagingSenderId: "91495921707",
-//   appId: "1:91495921707:web:a1d76423a74e1a9831926e"
-// };
 
 const firebaseConfig = {
   apiKey: "AIzaSyDCI4D2RV6A0Gr1sdZxGI0Mi_rqXpJhCw4",
@@ -48,9 +37,9 @@ export async function createUserObject(userAuth, data) {
   const userSnapshot = await getDoc(userRef);
   if (!userSnapshot.exists()) {
     const { email, displayName } = userAuth;
-    const createdAt = new Date();
+    const createdAt = new Date(), pickups = [];
     try {
-      setDoc(userRef, { displayName, uid, email, createdAt, ...data });
+      setDoc(userRef, { displayName, uid, email, pickups, createdAt, ...data });
     } catch (err) {
       console.log(err);
     }
@@ -58,86 +47,65 @@ export async function createUserObject(userAuth, data) {
   return userRef;
 }
 
-export const setGoalstoDB = async (goals) => {
+export const setPickups = async (pickup) => {
   try {
-    const userRef = doc(firestore, `users/${goals.user}`);
+    const userRef = doc(firestore, `users/${pickup.user}`);
     const userSnap = (await getDoc(userRef)).data();
-    const docRef = await addDoc(collection(firestore, "prescriptions"), {
-      exercise: doc(firestore, `excercises/${goals.exercise}`),
-      type: goals.type,
-      days: goals.days,
-      sets: goals.sets,
-      reps: goals.reps,
-      completed: goals.completed,
+    const docRef = await addDoc(collection(firestore, "pickups"), {
+      type: pickup.type,
+      weight: pickup.weight,
+      imageId: pickup.imageId,
+      dayTime: pickup.dayTime,
+      location: pickup.location,
+      OTP: pickup.OTP,
+      status: pickup.status,
       user: userRef,
-      routine: Array(parseInt(goals.days)).fill({
-        completed: false,
-        sets: 0,
-        reps: 0,
-        dailyRange: 0,
-      }),
-      created: Timestamp.now(),
+      createdAt : new Date()
     });
-    const routine = userSnap.routine;
-    await updateDoc(userRef, { routine: [...routine, docRef] });
+    const pickups = userSnap.pickups;
+    await updateDoc(userRef, { pickups: [...pickups, docRef] });
   } catch (err) {
-    alert(err);
+    console.log(err);
   }
 };
 
-export const addCollectionsAndDocuments = async (collectionKey, objectsToAdd) => {
-  const collectionRef = collection(firestore, collectionKey);
-  const batch = writeBatch(firestore);
-  Object.keys(objectsToAdd).forEach((key) => {
-    const docRef = doc(collectionRef, key);
-    batch.set(docRef, { ...objectsToAdd[key], id: docRef.id });
+export const getPickupHistoryForCitizen = async (userId) => {
+  const userRef = doc(firestore, `users/${userId}`);
+  const userSnap = (await getDoc(userRef)).data();
+  const pickups = userSnap.pickups;
+  const pickupHistory = [];
+  for (let i = 0; i < pickups.length; i++) {
+    const pickup = (await getDoc(pickups[i])).data();
+    pickupHistory.push(pickup);
+  }
+  return pickupHistory;
+};
+
+export const getPickupForGarbageCollector = async (userId) => {
+  const userRef = doc(firestore, `users/${userId}`);
+  const userSnap = (await getDoc(userRef)).data();
+  const truckColour = userSnap.truckColour;
+  const pickups = [];
+  const pickupRef = collection(firestore, "pickups");
+  const pickupSnap = await getDocs(pickupRef);
+  pickupSnap.forEach((doc) => {
+    const pickup = doc.data();
+    if (pickup.status === "pending" && pickup.type === truckColour && pickup.createdAt.toDate() < new Date()-86400000) {
+      pickups.push(pickup);
+    }
   });
-  await batch.commit();
+  pickups.sort((a, b) => {
+      return a.dayTime - b.dayTime;
+  });
+  return pickups;
 };
 
-export const updateRoutineDB = async (excerciseVars) => {
-  const { requiredReps, requiredSets, routine_id, dayRange } = excerciseVars;
-  const routine_item_ref = doc(firestore, `prescriptions/${routine_id}`);
-  const routine_item = (await getDoc(routine_item_ref)).data();
-  const dayNo = Math.floor(
-    (new Date() - routine_item.created.toDate()) / 86400000
-  );
-  const dayValues = {
-    completed: true,
-    reps: requiredReps,
-    sets: requiredSets,
-    dailyRange: dayRange || 135.0,
-  };
-  const updatedRoutineArray = routine_item.routine.map((item, idx) =>
-    idx === dayNo ? dayValues : item
-  );
-  const updated_routine_item = {
-    ...routine_item,
-    routine: updatedRoutineArray,
-    completed: dayNo === updatedRoutineArray.length ? true : false,
-  };
-  await updateDoc(routine_item_ref, updated_routine_item);
-};
-
-export const allocateDoctor = async (doctorId, userId) => {
+export const updatePickupStatus = async (pickupId, status) => {
   try {
-    let docRef = doc(firestore, `users/${doctorId}`);
-    let userRef = doc(firestore, `users/${userId}`);
-    let user = (await getDoc(userRef)).data();
-    let doctor = (await getDoc(docRef)).data();
-    const doctor_patients = doctor.patients || [];
-    const updated_doctor = {
-      ...doctor,
-      patients: [...doctor_patients, userRef],
-    };
-    await updateDoc(docRef, updated_doctor);
-    const updated_user = {
-      ...user,
-      doctorAllocatted: true,
-      doctorId: docRef,
-    };
-    await updateDoc(userRef, updated_user);
-  } catch (err) {
+    const pickupRef = doc(firestore, `pickups/${pickupId}`);
+    await updateDoc(pickupRef, { status });
+  }
+  catch (err) {
     console.log(err);
   }
 };
