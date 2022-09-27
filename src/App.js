@@ -9,14 +9,13 @@ import CitizenHome from './pages/Citizen/CitizenHome';
 import PickUp from './pages/Citizen/PickUp';
 import CollectorHome from './pages/GarbageCollector/CollectorHome';
 import {
-  BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
 function App() {
   
   return (
-   <Router>
+   <>
      <Navbar/>
       <Routes>
          <Route path="/" element={
@@ -32,7 +31,7 @@ function App() {
          <Route path="/login" element={<LoginPage/>}/>
          <Route path="/pickup" element={<PickUp/>}/>
       </Routes>
-    </Router>
+    </>
   );
 }
 
