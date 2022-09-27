@@ -1,7 +1,3 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities{
-  .clip-your-needful-style {
-   clip-path: ellipse(75% 100% at center top);
-  }
-};
+@tailwind utilities;
