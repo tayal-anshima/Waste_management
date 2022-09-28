@@ -10,11 +10,14 @@ import CitizenLogedin from './pages/Citizen/CitizenLogedin';
 import CollectorLogedin from './pages/GarbageCollector/CollectorLogedin';
 import PickUp from './pages/Citizen/PickUp';
 import CollectorHome from './pages/GarbageCollector/CollectorHome';
+import History from './pages/Citizen/History';
+import ScheduledPickup from './pages/GarbageCollector/ScheduledPickup';
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
+
 function App() {
   
   return (
@@ -35,6 +38,8 @@ function App() {
          <Route path="/pickup" element={<PickUp/>}/>
          <Route path="/citizenslogedin" element={<CitizenLogedin/>}/>
          <Route path="/collectorlogedin" element={<CollectorLogedin/>}/>
+         <Route path="/history" element={<History/>}/>
+        <Route path="/schedule" element={<ScheduledPickup/>}/>
       </Routes>
     </Router>
   );
