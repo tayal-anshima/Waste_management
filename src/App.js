@@ -13,6 +13,8 @@ import CollectorHome from './pages/GarbageCollector/CollectorHome';
 import History from './pages/Citizen/History';
 import Profile from './pages/Citizen/Profile';
 import ScheduledPickup from './pages/GarbageCollector/ScheduledPickup';
+import Map from './pages/GarbageCollector/Map';
+
 import {
   Routes,
   Route
@@ -42,6 +44,7 @@ function App() {
          <Route path="/history" element={<History/>}/>
         <Route path="/schedule" element={<ScheduledPickup/>}/>
         <Route path="/profile" element={<Profile/>}/>
+        <Route path="/map" element={<Map/>}/>
       </Routes>
     </>
   );

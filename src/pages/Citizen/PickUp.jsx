@@ -38,14 +38,14 @@ export default function PickUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-        //   if (image != null){
-        //     const imageRef = ref(storage, `images/${image.name + v4()}`);
-        //     uploadBytes(imageRef, image).then((snapshot) => {
-        //         getDownloadURL(snapshot.ref).then((url) => {
-        //         setImgUrl(url);
-        //         });
-        //     });
-        //   }
+          if (image != null){
+            const imageRef = ref(storage, `images/${image.name + v4()}`);
+            uploadBytes(imageRef, image).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                setImgUrl(url);
+                });
+            });
+          }
           let pickup = {
             type: type,
             weight: weight,
@@ -81,7 +81,7 @@ export default function PickUp() {
                         </div>
                         <div className='flex flex-col py-2'>
                             <label>Address</label>
-                            <textarea className='border p-2 text-black' type="text" onChange={(e) => setLocation(e.target.value)}/>
+                            <input className='border p-2 text-black' type="text" onChange={(e) => setLocation(e.target.value)}/>
                         </div>
                         <div className='flex flex-col py-2'>
                             <label>Pin Code</label>
