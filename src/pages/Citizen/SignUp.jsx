@@ -39,7 +39,7 @@ export default function SignUp(props) {
                 <h2 className='text-4xl font-bold text-center py-6'>Sign UP</h2>
                 <div className="error-msg" style={{ marginTop: "0.2rem", marginLeft: "0.2rem"}}>
                     {error && (
-                    <p className="error-text" style={{ color: "red", fontSize: "0.8rem", fontWeight: "900",}}>
+                    <p className="error-text" style={{ color: "red", fontSize: "0.8rem", fontWeight: "1000",}}>
                         {" "}
                         {error}
                     </p>
