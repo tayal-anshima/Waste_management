@@ -23,11 +23,12 @@ export default function HomeNavbar() {
               <a className="m-4 hover:cursor-pointer hover:underline" href="/history">Pickup-History</a>
           </nav>
           ) : (
-            <nav className="hidden md:block  items-center ml-6">
-              <a className="m-4 hover:cursor-pointer hover:underline" href="/collector">Home</a>
-              <a className="m-4 hover:cursor-pointer hover:underline" href="/scheduledPickup">Scheduled Pickup</a>
-              <a className="m-4 hover:cursor-pointer hover:underline" href="/map">Map</a>
-          </nav>
+            user ? (<nav className="hidden md:block  items-center ml-6">
+            <a className="m-4 hover:cursor-pointer hover:underline" href="/collector">Home</a>
+            <a className="m-4 hover:cursor-pointer hover:underline" href="/schedule">Scheduled Pickup</a>
+            <a className="m-4 hover:cursor-pointer hover:underline" href="/map">Map</a>
+          </nav>) : ("")
+            
           )
          }
        </div>
@@ -54,11 +55,13 @@ export default function HomeNavbar() {
             <li className="mt-3"><Link to="/citizens" >Home</Link></li>
             <li className="mt-3"><Link to="/pickup" >Pickup-Request</Link></li>
             <li className="mt-3"><Link to="/history" >Pickup-History</Link></li>
-          </>) : (<>
+          </>) : (
+          user ? (<>
             <li className="mt-3"><Link to="/collector" >Home</Link></li>
-            <li className="mt-3"><Link to="/scheduledPickup" >Scheduled Pickup</Link></li>
+            <li className="mt-3"><Link to="/schedule" >Scheduled Pickup</Link></li>
             <li className="mt-3"><Link to="/map" >Map</Link></li>
-          </>)
+          </>) : ("")
+          )
         }
         
         {
