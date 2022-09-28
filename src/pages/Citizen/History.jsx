@@ -10,8 +10,8 @@ export default function History() {
   let [pickups, setPickups] = React.useState([]);
   const getData = async () => {
     if (user && user.pickups) {
-      const pickupArray = await getPickupHistoryForCitizen(user.uid);
-      setPickups(pickupArray);
+      // const pickupArray = await getPickupHistoryForCitizen(user.uid);
+      // setPickups(pickupArray);
     }
   };
   getData();

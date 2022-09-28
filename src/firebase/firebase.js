@@ -92,7 +92,8 @@ export const getPickupForGarbageCollector = async (userId) => {
   const pickupSnap = await getDocs(pickupRef);
   pickupSnap.forEach((doc) => {
     const pickup = doc.data();
-    if (pickup.status === "pending" && pickup.type === truckColour && pickup.createdAt.toDate() < new Date()-86400000) {
+    // if (pickup.status === "pending" && pickup.type === truckColour && pickup.createdAt.toDate() < new Date()-86400000) {
+    if (pickup.status === "pending" && pickup.type === truckColour) {
       pickups.push(pickup);
     }
   });

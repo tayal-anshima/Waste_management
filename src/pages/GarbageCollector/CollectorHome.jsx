@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import img from '../../assets/images/home.jpg';
+import vdo from '../../assets/Video/ComponentsVdo.mp4';
 import SignUp from './SignUp';
 import CollectorLanding from './CollectorLanding';
 import { useUserAuth } from "../../context/UserAuthContext";
@@ -9,13 +9,15 @@ export default function CitizenHome() {
    const [signed,setSigned]=useState(false);
    console.log(signed)
    return (
-    <div className='h-screen'>
-       <div className=" sm:flex bg-teal-900 h-fit">
-          <div className=" sm:w-1/2 sm:my-10 text-center sm:text-justify ">
-          {user?(<CollectorLanding/>):(<SignUp signed={setSigned}/>)};
+      <div>
+      <div className=" sm:flex h-fit">
+          <div className="bg-teal-900  sm:w-1/2 text-center sm:text-justify p-10 ">
+           {user?(<CollectorLanding/>):(<SignUp signed={setSigned}/>)};
           </div>
-          <div className=" sm:w-1/2 grid  justify-items-center sm:justify-items-end ">
-             <img className="h-full hidden sm:block " src={img} alt=""/>
+          <div className="bg-teal-900 sm:w-1/2 grid justify-items-center sm:justify-items-end ... ">
+             <video autoPlay loop muted className='mt-12 sm:mt-20 h-4/6 rounded-xl sm:rounded-l-full ...'>
+                <source src={vdo} type="video/mp4"></source>
+            </video>
           </div>
        </div>
     </div>
