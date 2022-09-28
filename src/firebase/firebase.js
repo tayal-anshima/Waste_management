@@ -51,12 +51,14 @@ export const setPickups = async (pickup) => {
   try {
     const userRef = doc(firestore, `users/${pickup.user}`);
     const userSnap = (await getDoc(userRef)).data();
+    console.log(pickup);
     const docRef = await addDoc(collection(firestore, "pickups"), {
       type: pickup.type,
       weight: pickup.weight,
-      imageId: pickup.imageId,
+      // imgUrl: pickup.imgUrl,
       dayTime: pickup.dayTime,
       location: pickup.location,
+      pincode: pickup.pincode,
       OTP: pickup.OTP,
       status: pickup.status,
       user: userRef,
