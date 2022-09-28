@@ -32,6 +32,7 @@ export default function HomeNavbar() {
           )
          }
        </div>
+       {console.log("User" , user)}
         {
           user ? (
             <>

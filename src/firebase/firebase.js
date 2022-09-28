@@ -14,13 +14,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDCI4D2RV6A0Gr1sdZxGI0Mi_rqXpJhCw4",
-  authDomain: "waste-setu.firebaseapp.com",
-  projectId: "waste-setu",
-  storageBucket: "waste-setu.appspot.com",
-  messagingSenderId: "334939737045",
-  appId: "1:334939737045:web:4e7756fd8c5e3e63aecb5c",
-  measurementId: "G-4TKSMPN7GW"
+  apiKey: "AIzaSyD9OsSMKNh2qsoPzat-bekTrREX-nFAZk0",
+  authDomain: "wastesetu2.firebaseapp.com",
+  projectId: "wastesetu2",
+  storageBucket: "wastesetu2.appspot.com",
+  messagingSenderId: "876736884007",
+  appId: "1:876736884007:web:633d3dca9e545c628d8d02",
+  measurementId: "G-7Y4GNHGLPQ"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -41,7 +41,7 @@ export async function createUserObject(userAuth, data) {
     try {
       setDoc(userRef, { displayName, uid, email, pickups, createdAt, ...data });
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   }
   return userRef;
@@ -51,7 +51,7 @@ export const setPickups = async (pickup) => {
   try {
     const userRef = doc(firestore, `users/${pickup.user}`);
     const userSnap = (await getDoc(userRef)).data();
-    console.log(pickup);
+    // //console.log(pickup);
     const docRef = await addDoc(collection(firestore, "pickups"), {
       type: pickup.type,
       weight: pickup.weight,
@@ -67,21 +67,24 @@ export const setPickups = async (pickup) => {
     const pickups = userSnap.pickups;
     await updateDoc(userRef, { pickups: [...pickups, docRef] });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };
 
-export const getPickupHistoryForCitizen = async (userId) => {
-  const userRef = doc(firestore, `users/${userId}`);
-  const userSnap = (await getDoc(userRef)).data();
-  const pickups = userSnap.pickups;
-  const pickupHistory = [];
-  for (let i = 0; i < pickups.length; i++) {
-    const pickup = (await getDoc(pickups[i])).data();
-    pickupHistory.push(pickup);
-  }
-  return pickupHistory;
-};
+// export const getPickupHistoryForCitizen = async (userId) => {
+//   const userRef = doc(firestore, `users/${userId}`);
+//   const userSnap = (await getDoc(userRef)).data();
+//   //console.log(userSnap);
+//   const pickups = userSnap.pickups;
+//   const pickupHistory = [];
+//   for (let i = 0; i < pickups.length; i++) {
+//     const pickup = (await getDoc(pickups[i])).data();
+//     pickupHistory.push(pickup);
+//   }
+//   return pickupHistory;
+// };
+
+
 
 export const getPickupForGarbageCollector = async (userId) => {
   const userRef = doc(firestore, `users/${userId}`);
@@ -109,6 +112,6 @@ export const updatePickupStatus = async (pickupId, status) => {
     await updateDoc(pickupRef, { status });
   }
   catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };

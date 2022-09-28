@@ -9,7 +9,7 @@ navigator.geolocation.getCurrentPosition(
         lat: position.coords.latitude,
         lng: position.coords.longitude,
     }
-    console.log(pos);
+    //console.log(pos);
 })
 function Map() {
 

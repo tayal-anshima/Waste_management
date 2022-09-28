@@ -17,7 +17,7 @@ export function UserAuthContextProvider({ children }) {
       await createUserObject(user, data);  
     }
     catch(err){
-      console.log(err);
+      //console.log(err);
     }
   }
 
@@ -26,7 +26,7 @@ export function UserAuthContextProvider({ children }) {
       return signInWithEmailAndPassword(auth, email, password);
     }
     catch(err){
-      console.log(err);
+      //console.log(err);
     }
   }
 

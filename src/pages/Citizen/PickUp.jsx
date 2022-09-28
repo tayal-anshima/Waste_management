@@ -6,17 +6,15 @@ import { storage, setPickups } from "../../firebase/firebase";
 
 export default function PickUp() {
     const { user } = useUserAuth();
-    const [type, setType] = React.useState("");
+    const [type, setType] = React.useState("Yellow");
     const [weight, setWeight] = React.useState("");
-    const [imgUrl, setImgUrl] = React.useState(
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-    );
+    const [imgUrl, setImgUrl] = React.useState("https://cdn.pixabay.com/photo/2015/10/05/22/37blank-profile-picture-973460_960_720.png");
     const [dayTime, setDayTime] = React.useState("");
     const [location, setLocation] = React.useState("");
     const [pincode, setPincode] = React.useState("");
     const [image, setImage] = React.useState(null);
     const [message, setMessage] = React.useState("");
-    console.log(dayTime);
+    //console.log(dayTime);
 
     const handleChange = (e) => {
         if (e.target.files[0]) {
@@ -31,9 +29,9 @@ export default function PickUp() {
         }
     };
 
-    const handleTypeChange = (e) => {
-        setType(e.target.value);
-    };
+    // const handleTypeChange = (e) => {
+    //     setType(e.target.value);
+    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,13 +55,14 @@ export default function PickUp() {
             status: "pending",
             user: user.uid,
           };
+          console.log(pickup);
           await setPickups(pickup);
           setTimeout(function() {
             setMessage("Pickup Scheduled Successfully");
           }, 1000);          
         } catch (error) {
             setTimeout(function() {
-                console.log(error);
+                //console.log(error);
                 setMessage("Failed to generate pickup-request");
             }, 1000);
         }
@@ -89,7 +88,7 @@ export default function PickUp() {
                         </div>
                         <div className='flex flex-col py-2'>
                             <label>Garbage Type</label>
-                            <select name="GarbageType" id="GarbageType" className="text-black" onChange={handleTypeChange}>
+                            <select name="GarbageType" id="GarbageType" className="text-black" onChange={e => setType(e.target.value)}>
                                 <option value="Yellow">Yellow (papers and glass bottles)</option>
                                 <option value="Blue">Blue( plastic wrappers and non-bioderadable wastes)</option>
                                 <option value="Green">Green(wet and bioderadable wastes)</option>

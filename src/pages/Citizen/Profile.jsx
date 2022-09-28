@@ -8,7 +8,7 @@ export default function Profile() {
     try {
       await logOut();
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
  return (
