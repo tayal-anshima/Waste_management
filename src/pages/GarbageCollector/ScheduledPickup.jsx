@@ -2,6 +2,8 @@ import React from 'react'
 import PendingIcon from '@mui/icons-material/Pending';
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useUserAuth } from "../../context/UserAuthContext";
+import { getPickupForGarbageCollector } from "../../firebase/firebase";
 
 const data = [
   { user: "Mr Aakash Garg", location: "Rohini", time: "12:00" ,weight:"30kg",type:"Green",pickupStatus:"Pending" },
@@ -9,6 +11,16 @@ const data = [
   {user: "Vansh", location: "Paschim Vihar", time: "6:00" ,weight:"3kg",type:"Green",pickupStatus:"Cancel"},
 ]
 export default function History() {
+  const { user } = useUserAuth();
+  let [pickups, setPickups] = React.useState([]);
+  const getData = async () => {
+    if (user && user.pickups) {
+      const pickupArray = await getPickupForGarbageCollector(user.uid);
+      setPickups(pickupArray);
+    }
+  };
+  // console.log(pickups);
+  getData();
   return (
     <div className="m-10">
        <table className="border-2 border-teal-900 w-full h-fit">
