@@ -60,8 +60,6 @@ function clearRoute() {
     setDirectionsResponse(null)
     setDistance('')
     setDuration('')
-    originRef.current.value = ''
-    destiantionRef.current.value = ''
 }
 
 return (
@@ -84,7 +82,7 @@ return (
             mapTypeControl: false,
             fullscreenControl: false,
         }}
-        onLoad={map => setMap(map)}
+        onLoad={calculateRoute}
         >
         <Marker position={pos} />
         {directionsResponse && (
