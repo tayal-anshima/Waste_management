@@ -10,7 +10,10 @@ navigator.geolocation.getCurrentPosition(
         lng: position.coords.longitude,
     }
     console.log(pos);
-})
+}, (error)=>{
+    console.log(error)
+}, {enableHighAccuracy: true, timeout: 5000, maximumAge: 0})
+
 function Map() {
 
 const { isLoaded } = useJsApiLoader({
@@ -23,10 +26,10 @@ const [directionsResponse, setDirectionsResponse] = useState(null)
 const [distance, setDistance] = useState('')
 const [duration, setDuration] = useState('')
 
-/** @type React.MutableRefObject<HTMLInputElement> */
-const originRef = useRef()
-/** @type React.MutableRefObject<HTMLInputElement> */
-const destiantionRef = useRef()
+// /** @type React.MutableRefObject<HTMLInputElement> */
+// const originRef = useRef()
+// /** @type React.MutableRefObject<HTMLInputElement> */
+// const destiantionRef = useRef()
 
 if (!isLoaded) {
     return <SkeletonText />
@@ -36,7 +39,7 @@ async function calculateRoute() {
     // Db query to get location data as a string in array
     // let arr = db.get();
     let wypts = []
-    let arr = ["Mega Mall Gurgaon, Golf Course Road"];
+    let arr = ["Mega Mall Gurgaon", "Maharaja Agrasen Institute of Technology"];
     let dest = arr[arr.length-1];
     for(let i = 0; i < arr.length-1; i++){
         wypts.push({location:arr[i], stopover: true});
