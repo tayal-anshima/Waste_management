@@ -19,7 +19,7 @@ export default function History() {
       // setPickups(pickupArray);
     }
   };
-  console.log(pickups);
+  //console.log(pickups);
   getData();
   return (
     <div className="m-10">

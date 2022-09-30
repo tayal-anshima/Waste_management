@@ -7,7 +7,7 @@ import { useUserAuth } from "../../context/UserAuthContext";
 export default function CitizenHome() {
   const { user } = useUserAuth();
   const [signed,setSigned]=useState(false);
-  console.log(signed)
+  //console.log(signed)
   return (
    <div>
    <div className=" sm:flex h-fit">
